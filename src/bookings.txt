@@ -1,0 +1,7 @@
+Ticket ID: 1, Seat: 4, Passenger: Rohan
+Ticket ID: 1, Seat: 4, Passenger: Zoro
+Ticket ID: 1, Seat: 4, Passenger: Zoro
+Ticket ID: 2, Seat: 2, Passenger: Luffy
+Ticket ID: 3, Seat: 3, Passenger: Nami
+Ticket ID: 4, Seat: 1, Passenger: Sanji
+Ticket ID: 5, Seat: 2, Passenger: Rhitam

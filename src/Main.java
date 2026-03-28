@@ -1,26 +1,79 @@
+
+import java.util.*;
+
 public class Main {
 
     public static void main(String[] args) {
 
-        ReservationSystem system = new ReservationSystem(5);
+        Scanner sc = new Scanner(System.in);
 
-        Passenger p1 = new Passenger("Rohit", 1);
-        Passenger p2 = new Passenger("Rohan", 2);
+        System.out.print("Enter total number of seats: ");
+        int totalSeats = sc.nextInt();
 
-        BookingThread t1 = new BookingThread(system, p1, 2);
-        BookingThread t2 = new BookingThread(system, p2, 2);
+        ReservationSystem system = new ReservationSystem(totalSeats);
 
-        t1.start();
-        t2.start();
+        while (true) {
 
+            System.out.println("\n1. Book Seat");
+            System.out.println("2. Cancel Seat");
+            System.out.println("3. View Seats");
+            System.out.println("0. Exit");
+            System.out.print("Enter choice: ");
 
-        try {
-            t1.join();
-            t2.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            int choice = sc.nextInt();
+
+            if (choice == 0) break;
+
+            switch (choice) {
+
+                case 1:
+                    System.out.print("Enter Passenger ID: ");
+                    int id = sc.nextInt();
+                    sc.nextLine();
+
+                    System.out.print("Enter Passenger Name: ");
+                    String name = sc.nextLine();
+
+                    System.out.print("Enter Seat Number: ");
+                    int seat = sc.nextInt();
+
+                    if (seat < 1 || seat > totalSeats) {
+                        System.out.println("Invalid seat number!");
+                        break;
+                    }
+
+                    Passenger p = new Passenger(name, id);
+
+                    Thread t = new Thread(() -> {
+                        system.bookSeat(seat, p);
+                    });
+
+                    t.start();
+
+                    try {
+                        t.join();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
+
+                case 2:
+                    System.out.print("Enter Seat Number to Cancel: ");
+                    int cancelSeat = sc.nextInt();
+
+                    system.cancelSeat(cancelSeat);
+                    break;
+
+                case 3:
+                    system.viewSeats();
+                    break;
+
+                default:
+                    System.out.println("Invalid choice!");
+            }
         }
 
-        system.viewSeats();
+        sc.close();
     }
 }
